@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 
-import {Navlink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import './header.css';
 
 import {motion} from 'framer-motion'
@@ -8,7 +8,7 @@ import {motion} from 'framer-motion'
 import logo from '../../assets/images/eco-logo.png'
 import userIcon from '../../assets/images/user-icon.png'
 
-import { container, Row} from "reactstrap";
+import { Container, Row} from "reactstrap";
 
 const nav__links = [
   {
@@ -26,8 +26,28 @@ const nav__links = [
 ]
 
 const Header = () => {
-  return <header className="header">
-    <container>
+
+  const headerRef = useRef(null)
+
+  const stickyHeaderFunc = ()=>{
+    window.addEventListener('scroll', ()=>{
+      if(document.body.scrollTop > 80 || document.documentElement.scrollTop 
+        > 80 ){
+          headerRef.current.classList.add('stick__header')
+        } else{
+          headerRef.current.classList.remove('stick__header')
+        }
+    });
+  };
+
+  useEffect(()=>{
+    stickyHeaderFunc()
+
+    return () => window.removeEventListener('scroll', stickyHeaderFunc)
+  })
+
+  return <header className="header" ref={headerRef}>
+    <Container>
       <Row>
         <div className="nav__wrapper">
           <div className="logo">
@@ -43,8 +63,8 @@ const Header = () => {
               {
                 nav__links.map((item, index) =>(
                   <li className='nav__item' key = {index}>
-                      <Navlink to={item.path} className= {(navClass)=> 
-                        navClass.isActive ? 'nav__active' : '' } >{item.display}</Navlink>
+                      <NavLink to={item.path} className= {(navClass)=> 
+                        navClass.isActive ? 'nav__active' : '' } >{item.display}</NavLink>
                   </li>
                 ))
               }
@@ -54,11 +74,11 @@ const Header = () => {
           <div className="nav__icons">
 
             <span className='fav__icon'>
-            <i class="ri-heart-line"></i>
+            <i className="ri-heart-line"></i>
             <span className="badge">1</span>
             </span>
             <span className='cart__icon'>
-            <i class="ri-shopping-bag-line"></i>
+            <i className="ri-shopping-bag-line"></i>
             <span className="badge">1</span>
             </span>
 
@@ -68,12 +88,12 @@ const Header = () => {
           </div>
 
         <div className="mobile__menu">
-          <span><i class="ri-menu-line"></i></span>
+          <span><i className="ri-menu-line"></i></span>
         </div>
 
         </div>
       </Row>
-    </container>
+    </Container>
   </header>
 }
 

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
-// import "remixicon/fonts/remixicon.css";
-// import "bootstrap/dist/css/bootstrap.css";
+import "remixicon/fonts/remixicon.css";
+import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter} from "react-router-dom"
 
 import App from './App';
